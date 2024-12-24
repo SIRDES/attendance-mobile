@@ -9,7 +9,8 @@ import { Colors } from "@/constants/Colors";
 import { useColorScheme } from "@/hooks/useColorScheme";
 import { useAuth } from "@/context/AuthContext";
 import { Loader } from "@/components/Loader";
-import { Feather, Ionicons } from "@expo/vector-icons";
+import { Feather, Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
+import { COLOR } from "@/Theme";
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
@@ -48,18 +49,34 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="explore"
+        name="scan"
         options={{
-          title: "Explore",
+          title: "Scan",
+          headerShown: true,
+          headerTitle: "Scan QR",
+          headerStyle: {
+            backgroundColor: "#00384c", // Dark teal background color as in the image
+          },
+          headerTitleStyle: {
+            color: "white", // White text for the header title
+            fontSize: 18, // Adjust font size to match the design
+            fontWeight: "bold",
+          },
+          headerTitleAlign: "center", // Center-align the title
+          headerTintColor: "white", // Color for the back button or icons
+          headerBackgroundContainerStyle: {
+            backgroundColor: "#00384c",
+          },
           tabBarIcon: ({ focused, color }) => (
-            <IconSymbol
-              size={30}
-              name="paperplane.fill"
-              color={focused ? "black" : color}
+            <MaterialCommunityIcons
+              name="qrcode-scan"
+              size={24}
+              color={focused ? "#00384c" : color} // Match focused color to the header
             />
           ),
         }}
       />
+
       <Tabs.Screen
         name="settings"
         options={{
