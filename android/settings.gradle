@@ -21,7 +21,7 @@ extensions.configure(com.facebook.react.ReactSettingsExtension) { ex ->
   }
 }
 
-rootProject.name = 'attendanceapp'
+rootProject.name = 'Attendance app'
 
 dependencyResolutionManagement {
   versionCatalogs {

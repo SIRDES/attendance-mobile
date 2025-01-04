@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useLayoutEffect } from "react";
 import { View, Text, StyleSheet, TouchableOpacity, Alert } from "react-native";
 import { Camera, CameraView, CameraType, FlashMode } from "expo-camera";
 import * as Location from "expo-location";
@@ -13,13 +13,10 @@ const ScanQRScreen: React.FC = () => {
     useState<boolean>(false);
   const [activeTab, setActiveTab] = useState<string>("scan_qr");
   const [scanned, setScanned] = useState<boolean>(false);
-  const [location, setLocation] = useState<{
-    latitude: number;
-    longitude: number;
-  } | null>(null);
+  const [location, setLocation] = useState<any>(null);
 
   // Request Permissions
-  useEffect(() => {
+  useLayoutEffect(() => {
     (async () => {
       // Camera permissions
       const { status: cameraStatus } =
@@ -33,10 +30,11 @@ const ScanQRScreen: React.FC = () => {
 
       if (locationStatus === "granted") {
         const userLocation = await Location.getCurrentPositionAsync({});
-        setLocation({
-          latitude: userLocation.coords.latitude,
-          longitude: userLocation.coords.longitude,
-        });
+        setLocation(userLocation);
+        // setLocation({
+        //   latitude: userLocation.coords.latitude,
+        //   longitude: userLocation.coords.longitude,
+        // });
       } else {
         Alert.alert(
           "Permission Denied",
@@ -59,7 +57,9 @@ const ScanQRScreen: React.FC = () => {
     if (location) {
       Alert.alert(
         "QR Code Scanned",
-        `QR Code: ${data}\nLocation: Latitude ${location.latitude}, Longitude ${location.longitude}`
+        `QR Code: ${data}\nLocation: Latitude ${
+          location.latitude + 1
+        }, Longitude ${location.longitude + 1}`
       );
       console.log("QR Code Data:", data);
       console.log("Location Data:", location);
@@ -68,7 +68,7 @@ const ScanQRScreen: React.FC = () => {
     }
 
     // Reset scanning state after a delay to allow for rescans
-    setTimeout(() => setScanned(false), 2000);
+    setTimeout(() => setScanned(false), 20000);
   };
 
   if (!hasCameraPermission || !hasLocationPermission) {
@@ -97,7 +97,6 @@ const ScanQRScreen: React.FC = () => {
           barcodeScannerSettings={{
             barcodeTypes: ["qr", "pdf417"],
           }}
-          
           style={styles.camera}
           // ratio="16:9"
         >

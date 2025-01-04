@@ -1,6 +1,12 @@
 import { COLOR } from "@/Theme";
 import React, { useState } from "react";
-import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  Pressable,
+} from "react-native";
 
 const CustomTabComponent = ({
   activeTab,
@@ -24,7 +30,7 @@ const CustomTabComponent = ({
           Scan QR
         </Text>
       </TouchableOpacity>
-      <TouchableOpacity
+      <Pressable
         style={[styles.tab, activeTab === "assign_qr" && styles.activeTab]}
         onPress={() => setActiveTab("assign_qr")}
       >
@@ -36,7 +42,7 @@ const CustomTabComponent = ({
         >
           Asign QR Code
         </Text>
-      </TouchableOpacity>
+      </Pressable>
     </View>
   );
 };
@@ -48,11 +54,11 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
-    // backgroundColor: "#fff",
+    // backgroundColor: "transparent",
     borderRadius: 25,
     margin: 20,
     padding: 5,
-    elevation: 2, // For shadow on Android
+    elevation: 1, // For shadow on Android
   },
   tab: {
     flex: 1,
@@ -64,21 +70,14 @@ const styles = StyleSheet.create({
   activeTab: {
     backgroundColor: "#fff",
     shadowColor: "#000",
-    //elevation: 2, // Slight shadow for the active tab
   },
   tabText: {
     fontSize: 16,
-    fontWeight: "500",
-    color: "#888",
+    // fontWeight: "bold",
+    color: "#ccc",
   },
   activeTabText: {
-    // color: "red",
     color: COLOR.primaryColor,
     fontWeight: "bold",
-  },
-  content: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
   },
 });
